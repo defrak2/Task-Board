@@ -23,8 +23,8 @@ function saveTasksToStorage(tasks) {
 
 
 // Todo: create a function to generate a unique task id
-function generateTaskId(event) {
-
+function generateTaskId() {
+  return crypto.randomUUID();
 
 }
 
