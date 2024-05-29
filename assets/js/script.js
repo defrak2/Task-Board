@@ -31,18 +31,35 @@ function generateTaskId() {
 // Todo: create a function to create a task card
 function createTaskCard(task) {
 
-  // const taskCard = $('<div>')
-  //   .addClass('card project-card draggable my-3')
-  //   .attr('data-task-id', task.id);
-  //   const cardHeader = $('<div>').addClass('card-header h4').text(task.title);
-  //   const cardBody = $('<div>').addClass('card-body');
-  //   const cardDescription = $('<p>').addClass('card-text').text(task.description);
-  //   const cardDueDate = $('<p>').addClass('card-text').text(project.dueDate);
-  //   const cardDeleteBtn = $('<button>')
-  //     .addClass('btn btn-danger delete')
-  //     .text('Delete')
-  //     .attr('data-task-id', task.id);
-  // cardDeleteBtn.on('click', handleDeleteTask)  
+  const taskCard = $('<div>')
+    .addClass('card project-card draggable my-3')
+    .attr('data-task-id', task.id);
+    const cardHeader = $('<div>').addClass('card-header h4').text(task.title);
+    const cardBody = $('<div>').addClass('card-body');
+    const cardDescription = $('<p>').addClass('card-text').text(task.description);
+    const cardDueDate = $('<p>').addClass('card-text').text(project.dueDate);
+    const cardDeleteBtn = $('<button>')
+      .addClass('btn btn-danger delete')
+      .text('Delete')
+      .attr('data-task-id', task.id);
+  cardDeleteBtn.on('click', handleDeleteTask)  
+
+  if(task.taskDate && task.status !== 'done') {
+    const now = dayjs();
+    const taskDueDate = dayjs(task.dueDate, 'DD/MM/YYY');
+
+  if (now.isSame(taskDueDate, 'day')) {
+    taskCard.addClass('bg-warning text-white');
+  } else if (nowisAfter(taskDueDate)) {
+    taskCard.addClass('bg-danger text-white');
+    cardDeleteBtn.addClass('border-light');
+  }
+  }
+
+cardBody.append(cardDescription, cardDueDate, cardDeleteBtn);
+taskCard.append(cardHeader, cardBody);
+
+return taskCard;
 }
 
 
