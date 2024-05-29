@@ -30,23 +30,23 @@ function generateTaskId() {
 }
 
 // Todo: create a function to create a task card
-function createTaskCard(tasks) {
+function createTaskCard(task) {
   const taskCard = $('<div>')
     .addClass('card task-card draggable my-3')
-    .attr('data-task-id', tasks.id);
-    const cardHeader = $('<div>').addClass('card-header h4').text(tasks.title);
+    .attr('data-task-id', task.id);
+    const cardHeader = $('<div>').addClass('card-header h4').text(task.title);
     const cardBody = $('<div>').addClass('card-body');
-    const cardDescription = $('<p>').addClass('card-text').text(tasks.description);
-    const cardDueDate = $('<p>').addClass('card-text').text(tasks.date);
+    const cardDescription = $('<p>').addClass('card-text').text(task.description);
+    const cardDueDate = $('<p>').addClass('card-text').text(task.date);
     const cardDeleteBtn = $('<button>')
       .addClass('btn btn-danger delete')
       .text('Delete')
-      .attr('data-task-id', tasks.id);
+      .attr('data-task-id', task.id);
   cardDeleteBtn.on('click', handleDeleteTask);  
 
-  if(tasks.date && tasks.status !== 'done') {
+  if(task.date && task.status !== 'done') {
     const now = dayjs();
-    const taskDate = dayjs(tasks.date, 'DD/MM/YYY');
+    const taskDate = dayjs(task.date, 'DD/MM/YYY');
 
   if (now.isSame(taskDate, 'day')) {
     taskCard.addClass('bg-warning text-white');
@@ -67,18 +67,18 @@ return taskCard;
 function renderTaskList() {
 const tasks = readTasksFromStorage();
 
-const todoList = $('#todo-cards');
-todoList.empty();
+const toDoList = $('#todo-cards');
+toDoList.empty();
 
 const inProgressList = $('#in-progress-cards');
 inProgressList.empty();
 
 let doneList = $('#done-cards');
-doneList = $('#done-cards');
+doneList.empty();
 
 for (let task of tasks) {
   if (task.status === 'to-do') {
-    todoList.append(createTaskCard(task));
+    toDoList.append(createTaskCard(task));
 
   }else if (task.status === 'in-progress') {
     inProgressList.append(createTaskCard(task))
@@ -87,17 +87,20 @@ for (let task of tasks) {
   }
 }
 
-$('.draggable').draggable({
+$('.task-card').draggable({
   opacity: .7,
   zIndex: 100,
   helper: function (e) {
-    const original = $(e.target).hasClass('ui-draggable')
-    $(e.target)
-    $(e.target).closest('.ui-draggable');
+    // const original = $(e.target).hasClass('ui-draggable')
+    // $(e.target)
+    // $(e.target).closest('.ui-draggable');
 
     // return original.clone().css({
     //   width: original.outerWidth(),
     // });
+    return $(e.target).clone().css({
+      width: $(e.target).outerWidth(),
+    });
   },
 });
 }
@@ -165,7 +168,7 @@ function handleDrop(event, ui) {
 $(document).ready(function () {
   renderTaskList();
 
-  $('.lane').droppable({
+  $('.card-body').droppable({
     accept: '.draggable',
     drop: handleDrop,
   });
