@@ -182,11 +182,3 @@ $('#saveButton').on('click', handleAddTask);
 });
 
 // taskCard.on('click', '.cardDeleteBtn', handleDeleteTask);
-
-
-
-
-// focus on handle add task first. create the object for the modal pop up input. get that saved to local storage. pass that array to create task card. make cards, here you can add the color functionality for warning and late. push that card to a new array lastly return that array and pass it to render task list. where you place the cards based off the ids #todo #inprogress and #done
-
-
-//Whenever dragging the 
