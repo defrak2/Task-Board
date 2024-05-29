@@ -96,7 +96,7 @@ $( function() {
   $( "#datepicker" ).datepicker();
 } );
 
-
+$('#saveButton').on('click', handleAddTask);
 });
 
 
