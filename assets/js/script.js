@@ -1,6 +1,10 @@
 // Retrieve tasks and nextId from localStorage
 let taskList = JSON.parse(localStorage.getItem("tasks"));
 let nextId = JSON.parse(localStorage.getItem("nextId"));
+inputTitleEl = $('#inputTitle')
+inputDateEl = $('#inputDate')
+inputDescription = $('#inputDescription')
+
 // let taskCardEl = $('.task-card')
 
 //Created funtion to read tasks from Local Storage
@@ -128,7 +132,6 @@ function handleAddTask(event){
   saveTasksToStorage(tasks);
 
   $('#formModal').modal('hide');
-
   renderTaskList(tasks);
 }
 
@@ -181,4 +184,9 @@ $( function() {
 $('#saveButton').on('click', handleAddTask);
 });
 
+$('formModal').on('shown.bs.modal', function() {
+$('inputTitle').val('');
+$('inputDate').val('');
+$('inputDescription').val('');
+})
 // taskCard.on('click', '.cardDeleteBtn', handleDeleteTask);
