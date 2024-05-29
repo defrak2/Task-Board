@@ -37,7 +37,7 @@ function createTaskCard(task) {
     const cardHeader = $('<div>').addClass('card-header h4').text(task.title);
     const cardBody = $('<div>').addClass('card-body');
     const cardDescription = $('<p>').addClass('card-text').text(task.description);
-    const cardDueDate = $('<p>').addClass('card-text').text(project.dueDate);
+    const cardDueDate = $('<p>').addClass('card-text').text(task.dueDate);
     const cardDeleteBtn = $('<button>')
       .addClass('btn btn-danger delete')
       .text('Delete')
@@ -65,7 +65,41 @@ return taskCard;
 
 // Todo: create a function to render the task list and make cards draggable
 function renderTaskList() {
+const tasks = readTasksFromStorage();
 
+const todoList = $('#todo-cards');
+todoList.empty();
+
+const inProgressList = $('#in-progress-cards');
+inProgressList.empty();
+
+let doneList = $('#done-cards');
+doneList = $('#done-cards');
+
+for (let task of tasks) {
+  if (task.status === 'to-do') {
+    todoList.append(createTaskCard(task));
+
+  }else if (task.status === 'in-progress') {
+    inProgressList.append(createTaskCard(task))
+  } else if (task.status === 'done') {
+    doneList.append(createTaskCard(project))
+  }
+}
+
+$('draggable').draggable({
+  opacity: .7,
+  zIndex: 100,
+  helper: function (e) {
+    const original = $(e.target.hasClass ('ui-draggable'))
+    $(e.target)
+    $(e.target).closest('.ui-draggable');
+
+    return original.clone().css({
+      width: original.outerWidth(),
+    });
+  },
+});
 }
 
 // Todo: create a function to handle adding a new task
